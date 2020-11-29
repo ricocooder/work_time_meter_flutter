@@ -22,6 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
       // obscureText: true,
       keyboardType: TextInputType.emailAddress,
       textAlign: TextAlign.center,
+      style: TextStyle( color: Colors.red),
       validator: (String value) {
         if (value.isEmpty) {
           return 'Email is empty';
@@ -45,6 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return TextFormField(
       obscureText: true,
       textAlign: TextAlign.center,
+      style: TextStyle( color: Colors.red),
       validator: (String value) {
         if (value.isEmpty) {
           return 'Password is empty';
@@ -136,26 +138,26 @@ class _LoginScreenState extends State<LoginScreen> {
                             await newUser.user.sendEmailVerification();
                             // newUser.sendEmailVerification();
                             if (_auth.currentUser != null) {
-                              final user =  _auth.currentUser;
-                              final uid = user.uid.toString();
-                              print('poprawna rejestracja');
-                              await globals.firestore
-                                  .collection('Users')
-                                  .doc('$uid')
-                                  .set(
-                                  {
-                                    'UserName': '',
-                                    'UserSecondName': '',
-                                    'UserEmail': _email,
-                                    'Factory': '',
-                                    'Superior': '',
-                                    'Area': '',
-                                    'Position': '',
-                                    'AccontActivated': false,
-                                    'UserRegistrationTime': globals.timeFormatyyyy_MM_dd_HH_mm_ss.format(DateTime.now()).toString(),
-                                    'Status': null
-
-                                  });
+                              // final user =  _auth.currentUser;
+                              // final uid = user.uid.toString();
+                              // print('poprawna rejestracja');
+                              // await globals.firestore
+                              //     .collection('Users')
+                              //     .doc('$uid')
+                              //     .set(
+                              //     {
+                              //       'UserName': '',
+                              //       'UserSecondName': '',
+                              //       'UserEmail': _email,
+                              //       'Factory': '',
+                              //       'Superior': '',
+                              //       'Area': '',
+                              //       'Position': '',
+                              //       'AccontActivated': false,
+                              //       'UserRegistrationTime': globals.timeFormatyyyy_MM_dd_HH_mm_ss.format(DateTime.now()).toString(),
+                              //       'Status': null
+                              //
+                              //     });
                               Navigator.push(context, MaterialPageRoute(builder: (context)=> WelcomeScreen() ),);
                               setState(() {
                                 // showSpinner = false;

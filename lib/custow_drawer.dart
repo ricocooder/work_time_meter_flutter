@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:work_time_meter_flutter/globals.dart' as globals;
 import 'package:work_time_meter_flutter/screens/login.dart';
+import 'package:work_time_meter_flutter/screens/welcome.dart';
 
 class CustomDrawer extends StatelessWidget {
   final Function closeDrawer;
@@ -169,6 +170,8 @@ class CustomDrawer extends StatelessWidget {
                   onTap: () {
                     debugPrint("Tapped sweb view");
                     // Navigator.pushNamed(context, WebView.id);
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=> WelcomeScreen() ),);
+
 
                   },
                   leading: Icon(Icons.drive_file_move, color: Colors.black),
