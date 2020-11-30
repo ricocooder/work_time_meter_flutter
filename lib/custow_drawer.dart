@@ -1,11 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:work_time_meter_flutter/globals.dart' as globals;
 import 'package:work_time_meter_flutter/screens/login.dart';
 import 'package:work_time_meter_flutter/screens/welcome.dart';
+final _auth = FirebaseAuth.instance;
 
 class CustomDrawer extends StatelessWidget {
   final Function closeDrawer;
   const CustomDrawer({Key key, this.closeDrawer}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -215,7 +218,7 @@ class CustomDrawer extends StatelessWidget {
               children: [
                 ListTile(
                   onTap: () {
-                    // _auth.signOut();
+                    _auth.signOut();
                     Navigator.push(context, MaterialPageRoute(builder: (context)=> LoginScreen() ),);
                   },
                   leading: Icon(

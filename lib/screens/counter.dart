@@ -1,12 +1,14 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:foldable_sidebar/foldable_sidebar.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:swipedetector/swipedetector.dart';
 import 'package:work_time_meter_flutter/custow_drawer.dart';
 import 'package:work_time_meter_flutter/globals.dart' as globals;
+import 'package:work_time_meter_flutter/show_nessage.dart';
 
 // String startPracyString = '';
 // String stopPracyString = '';
@@ -22,7 +24,6 @@ int timeYouWantWorkHour = 8;
 int timeYouWantWorkMin = 25;
 int timeYouShouldGoHome;
 Duration totalTimeSpendAtWork;
-// String timeYouShouldGoHomeString = '';
 
 class CounterScreenBegin extends StatefulWidget {
   @override
@@ -465,44 +466,60 @@ class _CounterScreenState extends State<CounterScreen> {
   }
   get_sgared_preferencess()async{
     final prefs = await SharedPreferences.getInstance();
-    startPracy = prefs.getInt('startPracy')?? 10;
-    stopPracy = prefs.getInt('stopPracy')??10;
+    startPracy = prefs.getInt('startPracy');
+    stopPracy = prefs.getInt('stopPracy');
     timeYouShouldGoHome = prefs.getInt('timeYouShouldGoHome')??10;
 
   }
   upload()async{
     //test
     final _auth = await FirebaseAuth.instance;
-    final user =  _auth.currentUser;
-    final uid = user.uid.toString();
+    final user =  await _auth.currentUser;
+    final uid = await user.uid.toString();
     print('poprawna rejestracja');
     try{
     await globals.firestore
         .collection('WorkTime')
         .doc('$uid')
-        .collection('SavedHours').doc()
+        .collection('SavedHours').doc('${globals
+        .timeFormatyyyy_MM_dd_HH_mm_ss
+        .format(DateTime.now())
+        .toString()}')
         .set(
         {
           'detail_note': '',
           'employer': '',
           'main_note': '',
           'order': '',
-          'over_hours': overHours,
+          'over_hours': overHours != null ?
+        '${overHours.inHours.remainder(60).toString().padLeft(2,'0')}:${overHours.inMinutes.remainder(60).toString().padLeft(2,'0')}:${overHours.inSeconds.remainder(60).toString().padLeft(2,'0')}':
+        null,
           'time_you_want_work_hour': '$timeYouWantWorkHour',
           'time_you_want_work_min': '$timeYouWantWorkMin',
           'start_pracy': startPracy,
           'stop_pracy': stopPracy,
         });
     setState(() {
+
       overHours = null;
       startPracy = null;
+      save_shared_preferences('startPracy', startPracy);
       stopPracy = null;
+      save_shared_preferences('stopPracy', stopPracy);
       timeYouShouldGoHome = null;
+      save_shared_preferences('timeYouShouldGoHome', timeYouShouldGoHome);
       totalTimeSpendAtWork = null;
 
     });
     //test
     }catch(e){
+      showUserMessageByToast(
+          displayedText: e,
+          toastTimeDisplay: Toast.LENGTH_SHORT,
+          messageGravity: ToastGravity.BOTTOM,
+          textColor: Colors.red,
+          backgroundColor: Colors.white,
+          fontsize: 15);
       print(e);
     }
   }

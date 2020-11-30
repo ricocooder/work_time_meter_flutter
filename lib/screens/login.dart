@@ -1,9 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:work_time_meter_flutter/constants.dart';
 import 'package:work_time_meter_flutter/globals.dart' as globals;
 import 'package:work_time_meter_flutter/screens/welcome.dart';
+import 'package:work_time_meter_flutter/show_nessage.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -164,6 +166,13 @@ class _LoginScreenState extends State<LoginScreen> {
                               });
                             }
                           } catch (e) {
+                            showUserMessageByToast(
+                                displayedText: '$e',
+                                toastTimeDisplay: Toast.LENGTH_LONG,
+                                messageGravity: ToastGravity.BOTTOM,
+                                textColor: Colors.red,
+                                backgroundColor: Colors.white,
+                                fontsize: 15);
                             print(e);
                             setState(() {
                               // showSpinner = false;
