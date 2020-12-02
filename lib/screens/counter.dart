@@ -468,7 +468,7 @@ class _CounterScreenState extends State<CounterScreen> {
     final prefs = await SharedPreferences.getInstance();
     startPracy = prefs.getInt('startPracy');
     stopPracy = prefs.getInt('stopPracy');
-    timeYouShouldGoHome = prefs.getInt('timeYouShouldGoHome')??10;
+    timeYouShouldGoHome = prefs.getInt('timeYouShouldGoHome');
 
   }
   upload()async{

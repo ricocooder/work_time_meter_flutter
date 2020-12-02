@@ -1,13 +1,20 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:work_time_meter_flutter/auth.dart';
 import 'package:work_time_meter_flutter/globals.dart' as globals;
+import 'package:work_time_meter_flutter/root.dart';
+import 'package:work_time_meter_flutter/screens/counter.dart';
 import 'package:work_time_meter_flutter/screens/login.dart';
+import 'package:work_time_meter_flutter/screens/view_hours.dart';
 import 'package:work_time_meter_flutter/screens/welcome.dart';
 final _auth = FirebaseAuth.instance;
 
 class CustomDrawer extends StatelessWidget {
   final Function closeDrawer;
-  const CustomDrawer({Key key, this.closeDrawer}) : super(key: key);
+  // final BaseAuth auth;
+  const CustomDrawer({Key key, this.closeDrawer,
+    // this.auth
+  }) : super(key: key);
 
 
   @override
@@ -44,7 +51,7 @@ class CustomDrawer extends StatelessWidget {
                   style: TextStyle(color: Colors.black),
                 ),
                 SizedBox(height: 10.0,),
-                // Text('${globals.loggedInUser.email}.', style: TextStyle(color: Colors.red),),
+                 // Text('${auth.currentUser()}', style: TextStyle(color: Colors.red),),
               ],
             ),
           ),
@@ -144,17 +151,19 @@ class CustomDrawer extends StatelessWidget {
             ),
           ),
           Visibility(
-            visible: false,
+            visible: true,
             child: Column(
               children: [
                 ListTile(
                   onTap: () {
-                    debugPrint("Tapped Notifications");
+                    debugPrint("Tapped Counter");
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=> CounterScreenBegin() ),);
+
                     // Navigator.pushNamed(context, NotificationPage.id);
                   },
-                  leading: Icon(Icons.notifications, color: Colors.black),
+                  leading: Icon(Icons.timer, color: Colors.black),
                   title: Text(
-                    "Notifications",
+                    "Counter",
                     style: TextStyle(color: Colors.black),
                   ),
                 ),
@@ -173,9 +182,7 @@ class CustomDrawer extends StatelessWidget {
                   onTap: () {
                     debugPrint("Tapped sweb view");
                     // Navigator.pushNamed(context, WebView.id);
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=> WelcomeScreen() ),);
-
-
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=> ViewHoursBegin() ),);
                   },
                   leading: Icon(Icons.drive_file_move, color: Colors.black),
                   title: Text(
@@ -219,7 +226,7 @@ class CustomDrawer extends StatelessWidget {
                 ListTile(
                   onTap: () {
                     _auth.signOut();
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=> LoginScreen() ),);
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=> RootPage(auth: Auth()) ),);
                   },
                   leading: Icon(
                     Icons.exit_to_app,

@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:work_time_meter_flutter/auth.dart';
+import 'package:work_time_meter_flutter/root.dart';
 import 'package:work_time_meter_flutter/screens/counter.dart';
 import 'package:work_time_meter_flutter/screens/login.dart';
 
@@ -21,7 +23,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: LoginScreen(),
+        home: RootPage(auth: Auth()),
       ),
     );
   }

@@ -10,7 +10,7 @@ class Auth implements BaseAuth {
 
   @override
   Future<String> currentUser() async {
-    final User user = await _firebaseAuth.currentUser;
+    User user = await _firebaseAuth.currentUser;
     return user?.uid;
   }
 
