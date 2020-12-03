@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:work_time_meter_flutter/auth.dart';
+import 'package:work_time_meter_flutter/auth_privider.dart';
 import 'package:work_time_meter_flutter/globals.dart' as globals;
 import 'package:work_time_meter_flutter/root.dart';
 import 'package:work_time_meter_flutter/screens/counter.dart';
@@ -19,6 +20,7 @@ class CustomDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     MediaQueryData mediaQuery = MediaQuery.of(context);
     double szerokosc = mediaQuery.size.width;
     print(szerokosc);
@@ -51,7 +53,7 @@ class CustomDrawer extends StatelessWidget {
                   style: TextStyle(color: Colors.black),
                 ),
                 SizedBox(height: 10.0,),
-                 // Text('${auth.currentUser()}', style: TextStyle(color: Colors.red),),
+                 // Text('${getUserEmail()}', style: TextStyle(color: Colors.red),),
               ],
             ),
           ),
@@ -226,7 +228,7 @@ class CustomDrawer extends StatelessWidget {
                 ListTile(
                   onTap: () {
                     _auth.signOut();
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=> RootPage(auth: Auth()) ),);
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=> RootPage() ),);
                   },
                   leading: Icon(
                     Icons.exit_to_app,

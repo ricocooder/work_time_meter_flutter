@@ -6,12 +6,11 @@ import 'package:foldable_sidebar/foldable_sidebar.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:swipedetector/swipedetector.dart';
+import 'package:work_time_meter_flutter/auth.dart';
 import 'package:work_time_meter_flutter/custow_drawer.dart';
 import 'package:work_time_meter_flutter/globals.dart' as globals;
 import 'package:work_time_meter_flutter/show_nessage.dart';
 
-// String startPracyString = '';
-// String stopPracyString = '';
 double percent = 0.0;
 bool counterstarted = false;
 bool countingUp = false;
@@ -56,6 +55,7 @@ class _CounterScreenBeginState extends State<CounterScreenBegin> {
             child: FoldableSidebarBuilder(
               drawerBackgroundColor: Colors.blueAccent,
               drawer: CustomDrawer(
+
                 closeDrawer: () {
                   setState(
                     () {
