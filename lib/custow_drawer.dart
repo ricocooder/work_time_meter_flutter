@@ -53,7 +53,7 @@ class CustomDrawer extends StatelessWidget {
                   style: TextStyle(color: Colors.black),
                 ),
                 SizedBox(height: 10.0,),
-                 // Text('${getUserEmail()}', style: TextStyle(color: Colors.red),),
+                 Text('${globals.g_userEmail}', style: TextStyle(color: Colors.red),),
               ],
             ),
           ),

@@ -6,6 +6,7 @@ import 'package:foldable_sidebar/foldable_sidebar.dart';
 import 'package:swipedetector/swipedetector.dart';
 import 'package:work_time_meter_flutter/customCard_TwoLine.dart';
 import 'package:work_time_meter_flutter/custow_drawer.dart';
+import 'package:work_time_meter_flutter/screens/detail.dart';
 
 class ViewHoursBegin extends StatefulWidget {
   @override
@@ -117,7 +118,7 @@ class EventsStream extends StatelessWidget {
           final employer = message.data()['employer'];
           final main_note = message.data()['main_note'];
           final detail_note = message.data()['detail_note'];
-          // final order = message.data()['order'];
+          final eventid = message.id;
           final over_hours = message.data()['over_hours'];
           final stop_pracy = message.data()['stop_pracy'];
           final time_you_want_work_hour = message.data()['time_you_want_work_hour'];
@@ -128,7 +129,7 @@ class EventsStream extends StatelessWidget {
             employer_from: employer,
             main_note_from: main_note,
             detail_note_from: detail_note,
-            // order_from: order,
+            event_from: eventid,
             over_hours_from: over_hours,
             stop_pracy_from: stop_pracy,
             time_you_want_work_hour_from: time_you_want_work_hour,
@@ -154,7 +155,7 @@ class MessageBubble extends StatelessWidget {
     this.start_pracy_from,
     this.employer_from,
     this.main_note_from,
-    // this.order_from,
+    this.event_from,
     this.over_hours_from,
     this.stop_pracy_from,
     this.time_you_want_work_hour_from,
@@ -166,7 +167,7 @@ class MessageBubble extends StatelessWidget {
   final int start_pracy_from;
   final String employer_from;
   final String main_note_from;
-  // final String order_from;
+  final String event_from;
   final String over_hours_from;
   final int stop_pracy_from;
   final String time_you_want_work_hour_from;
@@ -187,21 +188,23 @@ class MessageBubble extends StatelessWidget {
         margin: EdgeInsets.symmetric(vertical: 4.0, horizontal: 4.0),
         child: GestureDetector(
           behavior: HitTestBehavior.translucent,
-          // onTap: () {
-            // print('Taped: $eventIdFrom');
-//          Navigator.pushNamed(context, MaterialPageRoute(builder: (context)));
-//             Navigator.push(
-//                 context,
-//                 MaterialPageRoute(
-//                     builder: (context) => DetailPage(
-//                       passedId: '$eventIdFrom',
-//                     )));
-//          navigateToDetailPage(eventIdFrom);
-            //done open "DetailPage" passing eventIdFrom and display all detail
-          // },
-          // onLongPress: () {
-          //   createDeleteEventDialog(context, eventIdFrom);
-          // },
+          onTap: () {
+            print('Taped: $event_from');
+
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> DetailPage(passedId: event_from) ),);
+         // Navigator.pushNamed(context, MaterialPageRoute(builder: (context)));
+         //    Navigator.push(
+         //        context,
+         //        MaterialPageRoute(
+         //            builder: (context) => DetailPage(
+         //              passedId: '$event_from',
+         //            )));
+         // navigateToDetailPage(event_from);
+            // done open "DetailPage" passing event_from and display all detail
+          },
+          onLongPress: () {
+            createDeleteEventDialog(context, event_from);
+          },
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -256,4 +259,88 @@ class MessageBubble extends StatelessWidget {
       return Colors.lightGreen;
     }
   }
+}
+
+createDeleteEventDialog(BuildContext context, eventIdFrom1) {
+  return showDialog(
+      useSafeArea: true,
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Confirm deletion'),
+          content: Text('Are you sure you want to delete this item ?'),
+          actions: [
+            Row(
+              children: [
+                FlatButton(
+                  color: Colors.lightBlueAccent,
+                  padding: EdgeInsets.all(1.0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10.0),
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.close,
+                        color: Colors.yellow,
+                      ),
+                      Text(
+                        'NO',
+                        style: TextStyle(color: Colors.black),
+                      )
+                    ],
+                  ),
+                  onPressed: () {
+                    Navigator.of(context, rootNavigator: true).pop();
+                    //done zapis do bazy danych
+                  },
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: FlatButton(
+                    color: Colors.lightBlueAccent,
+                    padding: EdgeInsets.all(1.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10.0),
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.delete,
+                          color: Colors.red,
+                        ),
+                        Text(
+                          'YES',
+                          style: TextStyle(color: Colors.black),
+                        )
+                      ],
+                    ),
+                    onPressed: () {
+                      deleteEvent(eventIdFrom1);
+                      Navigator.of(context, rootNavigator: true).pop();
+
+                      //done zapis do bazy danych
+                    },
+                  ),
+                ),
+              ],
+            )
+          ],
+        );
+      });
+}
+
+void deleteEvent(eventIdFrom) async {
+  // await globals.firestore
+  //     .collection('${globals.assignedFactory}')
+  //     .document('Events')
+  //     .collection('EventsUUID')
+  //     .document('Data')
+  //     .collection('DataUUID')
+  //     .document('$eventIdFrom')
+  //     .delete();
 }

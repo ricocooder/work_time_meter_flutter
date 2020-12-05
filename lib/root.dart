@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:work_time_meter_flutter/auth_privider.dart';
+import 'package:work_time_meter_flutter/globals.dart';
 import 'package:work_time_meter_flutter/screens/counter.dart';
 import 'package:work_time_meter_flutter/screens/login.dart';
 import 'package:work_time_meter_flutter/show_nessage.dart';
@@ -29,6 +30,7 @@ class _RootPageState extends State<RootPage> {
     auth.currentUserr().then((userUID) {
       setState(() {
        _authStatus = userUID == null ? AuthStatus.notSignIn : AuthStatus.signIn;
+       getcurrentuserdata();
       });
     });
   }
