@@ -1,13 +1,17 @@
 import 'dart:io';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:work_time_meter_flutter/globals.dart' as globals;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:work_time_meter_flutter/customCard_TwoLine.dart';
 import 'package:work_time_meter_flutter/screens/view_hours.dart';
+import 'package:work_time_meter_flutter/show_nessage.dart';
 
-File imageFile;
-var statustempnumber = 0;
-String statustemporarytext;
+String employer_detailScreen;
+int startpracy_detailScreen;
+int stoppracy_detailScreen;
+int timeyouwantworkhours_detailScreen;
+int timeyouwantworkmin_detailScreen;
 
 class DetailPage extends StatefulWidget {
   static String id = 'detailscreen';
@@ -93,147 +97,195 @@ class _DetailPageState extends State<DetailPage> {
               );
             } else {
               return SafeArea(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        AppBar(
-                          title: Text('DetailPage'),
-                        ),
-                        CustomCardTwoLine(
-                          firstText: "Employer",
-                          secondText: "${snapshot1.data["employer"]}",
-                        ),
-                        CustomCardTwoLine(
-                          firstText: "Start",
-                          secondText: "${snapshot1.data["start_pracy"]}",
-                        ),
-                        CustomCardTwoLine(
-                          firstText: "Stop",
-                          secondText: "${snapshot1.data["stop_pracy"]}",
-                        ),
-                        CustomCardTwoLine(
-                          firstText: "Planed time",
-                          secondText:
-                          "${snapshot1.data["time_you_want_work_hour"] + ':' + snapshot1.data["time_you_want_work_min"]}",
-                        ),
-                        CustomCardTwoLine(
-                          firstText: 'Over Hours',
-                          secondText: "${snapshot1.data["over_hours"]}",
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: SizedBox(
-                            width: 100,
-                            child: FlatButton(
-                              color: Colors.lightBlueAccent,
-                              padding: EdgeInsets.all(1.0),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(10.0),
-                                ),
+                  child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      AppBar(
+                        title: Text('DetailPage'),
+                      ),
+                      CustomCardTwoLine(
+                        firstText: "Employer",
+                        secondText: employer_detailScreen,
+                      ),
+                      CustomCardTwoLine(
+                        firstText: "Start",
+                        secondText: globals.timeFormatyyyy_MM_dd_EEEE_HH_mm_ss
+                            .format(
+                              DateTime.fromMillisecondsSinceEpoch(
+                                snapshot1.data["start_pracy"],
                               ),
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.calculate,
-                                    color: Colors.black,
-                                  ),
-                                  Text(
-                                    'Calculate',
-                                    style: TextStyle(color: Colors.black),
-                                  )
-                                ],
+                            )
+                            .toString(),
+                      ),
+                      CustomCardTwoLine(
+                        firstText: "Stop",
+                        secondText: globals.timeFormatyyyy_MM_dd_EEEE_HH_mm_ss
+                            .format(
+                              DateTime.fromMillisecondsSinceEpoch(
+                                snapshot1.data["stop_pracy"],
                               ),
-                              onPressed: () {
-                                Navigator.of(context, rootNavigator: true).pop();
-                                //done zapis do bazy danych
-                              },
+                            )
+                            .toString(),
+                      ),
+                      CustomCardTwoLine(
+                        firstText: "Planed time",
+                        secondText:
+                            "${snapshot1.data["time_you_want_work_hour"].toString() + ':' + snapshot1.data["time_you_want_work_min"].toString()}",
+                      ),
+                      CustomCardTwoLine(
+                        firstText: "Total time",
+                        secondText: '${DateTime.fromMillisecondsSinceEpoch(snapshot1.data["stop_pracy"]).difference(
+                              DateTime.fromMillisecondsSinceEpoch(
+                                snapshot1.data["start_pracy"],
+                              ),
+                            ).inHours.remainder(60).toString().padLeft(2, '0')}:${DateTime.fromMillisecondsSinceEpoch(
+                          snapshot1.data["stop_pracy"],
+                        ).difference(
+                              DateTime.fromMillisecondsSinceEpoch(
+                                snapshot1.data["start_pracy"],
+                              ),
+                            ).inMinutes.remainder(60).toString().padLeft(2, '0')}:${DateTime.fromMillisecondsSinceEpoch(snapshot1.data["stop_pracy"]).difference(
+                              DateTime.fromMillisecondsSinceEpoch(
+                                snapshot1.data["start_pracy"],
+                              ),
+                            ).inSeconds.remainder(60).toString().padLeft(2, '0')}',
+                        // "${snapshot1.data["time_you_want_work_hour"].toString() + ':' + snapshot1.data["time_you_want_work_min"].toString()}",
+                      ),
+                      CustomCardTwoLine(
+                        firstText: 'Over Hours',
+                        secondText:
+                            "${snapshot1.data["over_hours"].toString()}",
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: SizedBox(
+                          width: 100,
+                          child: FlatButton(
+                            color: Colors.lightBlueAccent,
+                            padding: EdgeInsets.all(1.0),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10.0),
+                              ),
                             ),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.calculate,
+                                  color: Colors.black,
+                                ),
+                                Text(
+                                  'Calculate',
+                                  style: TextStyle(color: Colors.black),
+                                )
+                              ],
+                            ),
+                            onPressed: () {
+                              reCalculateHours(planedMin: snapshot1.data["time_you_want_work_min"], start: snapshot1.data["start_pracy"], planedHours: snapshot1.data["time_you_want_work_hour"], stop: snapshot1.data["stop_pracy"]);
+                              showUserMessageByToast(
+                                  displayedText: 'This functionality will be provided in the future',
+                                  toastTimeDisplay: Toast.LENGTH_SHORT,
+                                  messageGravity: ToastGravity.BOTTOM,
+                                  textColor: Colors.black,
+                                  backgroundColor: Colors.white,
+                                  fontsize: 15);
+                              // Navigator.of(context, rootNavigator: true).pop();
+                              //done zapis do bazy danych
+                            },
                           ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 20.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: 10,
+                        ),
+                        SizedBox(
+                          width: 100,
+                          child: FlatButton(
+                            color: Colors.lightBlueAccent,
+                            padding: EdgeInsets.all(1.0),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10.0),
+                              ),
+                            ),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.save,
+                                  color: Colors.green,
+                                ),
+                                Text(
+                                  'Save',
+                                  style: TextStyle(color: Colors.black),
+                                )
+                              ],
+                            ),
+                            onPressed: () {
+                              showUserMessageByToast(
+                                  displayedText: 'This functionality will be provided in the future',
+                                  toastTimeDisplay: Toast.LENGTH_SHORT,
+                                  messageGravity: ToastGravity.BOTTOM,
+                                  textColor: Colors.black,
+                                  backgroundColor: Colors.white,
+                                  fontsize: 15);
+                            },
+                          ),
+                        ),
+                        SizedBox(
+                          width: 100,
+                          child: FlatButton(
+                            color: Colors.lightBlueAccent,
+                            padding: EdgeInsets.all(1.0),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10.0),
+                              ),
+                            ),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.delete,
+                                  color: Colors.red,
+                                ),
+                                Text(
+                                  'Delete',
+                                  style: TextStyle(color: Colors.black),
+                                )
+                              ],
+                            ),
+                            onPressed: () {
+                              // deleteEvent(eventIdFrom1);
+                              // Navigator.of(context, rootNavigator: true).pop();
+                              showUserMessageByToast(
+                                  displayedText: 'This functionality will be provided in the future',
+                                  toastTimeDisplay: Toast.LENGTH_SHORT,
+                                  messageGravity: ToastGravity.BOTTOM,
+                                  textColor: Colors.black,
+                                  backgroundColor: Colors.white,
+                                  fontsize: 15);
+                              //done zapis do bazy danych
+                            },
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
                         ),
                       ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 20.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(
-                            width: 10,
-                          ),
-                          SizedBox(
-                            width: 100,
-                            child: FlatButton(
-                              color: Colors.lightBlueAccent,
-                              padding: EdgeInsets.all(1.0),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(10.0),
-                                ),
-                              ),
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.save,
-                                    color: Colors.green,
-                                  ),
-                                  Text(
-                                    'Save',
-                                    style: TextStyle(color: Colors.black),
-                                  )
-                                ],
-                              ),
-                              onPressed: () {
-                                // deleteEvent(eventIdFrom1);
-                                // Navigator.of(context, rootNavigator: true).pop();
-
-                                //done zapis do bazy danych
-                              },
-                            ),
-                          ),
-                          SizedBox(
-                            width: 100,
-                            child: FlatButton(
-                              color: Colors.lightBlueAccent,
-                              padding: EdgeInsets.all(1.0),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(10.0),
-                                ),
-                              ),
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.delete,
-                                    color: Colors.red,
-                                  ),
-                                  Text(
-                                    'Delete',
-                                    style: TextStyle(color: Colors.black),
-                                  )
-                                ],
-                              ),
-                              onPressed: () {
-                                // deleteEvent(eventIdFrom1);
-                                // Navigator.of(context, rootNavigator: true).pop();
-
-                                //done zapis do bazy danych
-                              },
-                            ),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                )
-              );
+                  ),
+                ],
+              ));
             }
           },
         ),
@@ -316,4 +368,7 @@ class _DetailPageState extends State<DetailPage> {
       },
     );
   }
+}
+reCalculateHours({@required int start, @required int stop, @required int planedHours, @required int planedMin}) async {
+  print('Start: $start\nStop: $stop\n Planed time: $planedHours:$planedMin');
 }

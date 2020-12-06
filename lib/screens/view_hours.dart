@@ -100,7 +100,7 @@ class EventsStream extends StatelessWidget {
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance
           .collection('WorkTime')
-          .doc('xgvULzl896axpqCDMy09204x3rJ3')
+          .doc('${globals.g_userId}')
           .collection('SavedHours')
           .snapshots(),
       builder: (context, snapshot) {
@@ -168,10 +168,10 @@ class MessageBubble extends StatelessWidget {
   final String employer_from;
   final String main_note_from;
   final String event_from;
-  final String over_hours_from;
+  final int over_hours_from;
   final int stop_pracy_from;
-  final String time_you_want_work_hour_from;
-  final String time_you_want_work_min_from;
+  final int time_you_want_work_hour_from;
+  final int time_you_want_work_min_from;
   final String detail_note_from;
 
 
@@ -219,14 +219,14 @@ class MessageBubble extends StatelessWidget {
                   .timeFormatyyyy_MM_dd_EEEE_HH_mm_ss
                   .format(DateTime.fromMillisecondsSinceEpoch(stop_pracy_from))
                   .toString()),
-              CustomCardTwoLine(firstText: 'Planed Hours:', secondText: '$time_you_want_work_hour_from:$time_you_want_work_min_from'),
-              CustomCardTwoLine(firstText: 'Total Hours:', secondText: '${DateTime.fromMillisecondsSinceEpoch(stop_pracy_from).difference(
+              CustomCardTwoLine(firstText: 'Planed Hours', secondText: '$time_you_want_work_hour_from:$time_you_want_work_min_from'),
+              CustomCardTwoLine(firstText: 'Total Hours', secondText: '${DateTime.fromMillisecondsSinceEpoch(stop_pracy_from).difference(
                   DateTime.fromMillisecondsSinceEpoch(start_pracy_from)).inHours.remainder(60).toString().padLeft(2,'0')}:${DateTime.fromMillisecondsSinceEpoch(stop_pracy_from).difference(
                   DateTime.fromMillisecondsSinceEpoch(start_pracy_from)).inMinutes.remainder(60).toString().padLeft(2,'0')}:${DateTime.fromMillisecondsSinceEpoch(stop_pracy_from).difference(
                   DateTime.fromMillisecondsSinceEpoch(start_pracy_from)).inSeconds.remainder(60).toString().padLeft(2,'0')}'),
 
               CustomCardTwoLine(
-                  firstText: 'Over Hours', secondText: over_hours_from),
+                  firstText: 'Over Hours', secondText: '$over_hours_from'),
               // CustomCardTwoLine(firstText: 'Status', secondText: statusFrom),
               // CustomCardTwoLine(
               //     firstText: 'Closed', secondText: closedTimeFrom),
@@ -239,8 +239,8 @@ class MessageBubble extends StatelessWidget {
 
   }
 
-  colorPicker({String colornumber}) {
-    if (colornumber != null) {
+  colorPicker({int colornumber}) {
+    if (colornumber != null && colornumber > 0) {
       return Colors.red;
     }
     // if (colornumber == 'Proces') {

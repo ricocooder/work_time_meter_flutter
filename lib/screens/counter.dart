@@ -55,7 +55,6 @@ class _CounterScreenBeginState extends State<CounterScreenBegin> {
             child: FoldableSidebarBuilder(
               drawerBackgroundColor: Colors.blueAccent,
               drawer: CustomDrawer(
-
                 closeDrawer: () {
                   setState(
                     () {
@@ -99,15 +98,15 @@ class CounterScreen extends StatefulWidget {
 
 class _CounterScreenState extends State<CounterScreen> {
   // Timer timer;
-@override
+  @override
   void initState() {
-  get_sgared_preferencess();
+    get_sgared_preferencess();
 
-  // TODO: implement initState
+    // TODO: implement initState
     super.initState();
   }
-  @override
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[900],
@@ -164,24 +163,23 @@ class _CounterScreenState extends State<CounterScreen> {
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 2.0, horizontal: 5.0),
-                child: timeYouShouldGoHome != null ? Text(
-                  'Time you should go home: ${globals
-                      .timeFormatyyyy_MM_dd_HH_mm_ss
-                      .format(DateTime.fromMillisecondsSinceEpoch(timeYouShouldGoHome))
-                      .toString()}',
+                child: timeYouShouldGoHome != null
+                    ? Text(
+                        'Time you should go home: ${globals.timeFormatyyyy_MM_dd_HH_mm_ss.format(DateTime.fromMillisecondsSinceEpoch(timeYouShouldGoHome)).toString()}',
 //          maxLines: 1,
-                  style: TextStyle(
-                    color: Colors.white,
-                    // fontSize: fontsize
-                  ),
-                ): Text(
-                  'Time you should go home:',
+                        style: TextStyle(
+                          color: Colors.white,
+                          // fontSize: fontsize
+                        ),
+                      )
+                    : Text(
+                        'Time you should go home:',
 //          maxLines: 1,
-                  style: TextStyle(
-                    color: Colors.white,
-                    // fontSize: fontsize
-                  ),
-                ),
+                        style: TextStyle(
+                          color: Colors.white,
+                          // fontSize: fontsize
+                        ),
+                      ),
               ),
             ),
 
@@ -193,24 +191,23 @@ class _CounterScreenState extends State<CounterScreen> {
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 2.0, horizontal: 5.0),
-                child: startPracy != null ? Text(
-                  'Start Pracy: ${globals
-                      .timeFormatyyyy_MM_dd_HH_mm_ss
-                      .format(DateTime.fromMillisecondsSinceEpoch(startPracy))
-                      .toString()}',
+                child: startPracy != null
+                    ? Text(
+                        'Start Pracy: ${globals.timeFormatyyyy_MM_dd_HH_mm_ss.format(DateTime.fromMillisecondsSinceEpoch(startPracy)).toString()}',
 //          maxLines: 1,
-                  style: TextStyle(
-                    color: Colors.white,
-                    // fontSize: fontsize
-                  ),
-                ): Text(
-                  'Start Pracy:',
+                        style: TextStyle(
+                          color: Colors.white,
+                          // fontSize: fontsize
+                        ),
+                      )
+                    : Text(
+                        'Start Pracy:',
 //          maxLines: 1,
-                  style: TextStyle(
-                    color: Colors.white,
-                    // fontSize: fontsize
-                  ),
-                ),
+                        style: TextStyle(
+                          color: Colors.white,
+                          // fontSize: fontsize
+                        ),
+                      ),
               ),
             ),
             Card(
@@ -221,24 +218,23 @@ class _CounterScreenState extends State<CounterScreen> {
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 2.0, horizontal: 5.0),
-                child: stopPracy != null ? Text(
-                  'Stop Pracy: ${globals
-                      .timeFormatyyyy_MM_dd_HH_mm_ss
-                      .format(DateTime.fromMillisecondsSinceEpoch(stopPracy))
-                      .toString()}',
+                child: stopPracy != null
+                    ? Text(
+                        'Stop Pracy: ${globals.timeFormatyyyy_MM_dd_HH_mm_ss.format(DateTime.fromMillisecondsSinceEpoch(stopPracy)).toString()}',
 //          maxLines: 1,
-                  style: TextStyle(
-                    color: Colors.white,
-                    // fontSize: fontsize
-                  ),
-                ): Text(
-              'Stop Pracy:',
+                        style: TextStyle(
+                          color: Colors.white,
+                          // fontSize: fontsize
+                        ),
+                      )
+                    : Text(
+                        'Stop Pracy:',
 //          maxLines: 1,
-        style: TextStyle(
-          color: Colors.white,
-          // fontSize: fontsize
-        ),
-      ),
+                        style: TextStyle(
+                          color: Colors.white,
+                          // fontSize: fontsize
+                        ),
+                      ),
               ),
             ),
             Card(
@@ -251,7 +247,7 @@ class _CounterScreenState extends State<CounterScreen> {
                     const EdgeInsets.symmetric(vertical: 2.0, horizontal: 5.0),
                 child: totalTimeSpendAtWork != null
                     ? Text(
-                        'Total time spend at work: ${totalTimeSpendAtWork?.inHours?.remainder(60).toString().padLeft(2,'0')}:${totalTimeSpendAtWork?.inMinutes?.remainder(60).toString().padLeft(2,'0')}:${totalTimeSpendAtWork?.inSeconds?.remainder(60).toString().padLeft(2,'0')}',
+                        'Total time spend at work: ${totalTimeSpendAtWork?.inHours?.remainder(60).toString().padLeft(2, '0')}:${totalTimeSpendAtWork?.inMinutes?.remainder(60).toString().padLeft(2, '0')}:${totalTimeSpendAtWork?.inSeconds?.remainder(60).toString().padLeft(2, '0')}',
                         style: TextStyle(
                           color: Colors.white,
                           // fontSize: fontsize
@@ -273,21 +269,22 @@ class _CounterScreenState extends State<CounterScreen> {
               margin: EdgeInsets.symmetric(vertical: 2.0, horizontal: 3.0),
               child: Padding(
                 padding:
-                const EdgeInsets.symmetric(vertical: 2.0, horizontal: 5.0),
-                child: overHours != null ? Text(
-                  'Over Hours: ${overHours.inHours.remainder(60).toString().padLeft(2,'0')}:${overHours.inMinutes.remainder(60).toString().padLeft(2,'0')}:${overHours.inSeconds.remainder(60).toString().padLeft(2,'0')}',
-                  style: TextStyle(
-                    color: Colors.white,
-                    // fontSize: fontsize
-                  ),
-                ):Text(
-                  'Over Hours: ',
-                  style: TextStyle(
-                    color: Colors.white,
-                    // fontSize: fontsize
-                  ),
-                ),
-
+                    const EdgeInsets.symmetric(vertical: 2.0, horizontal: 5.0),
+                child: overHours != null
+                    ? Text(
+                        'Over Hours: ${overHours.inHours.remainder(60).toString().padLeft(2, '0')}:${overHours.inMinutes.remainder(60).toString().padLeft(2, '0')}:${overHours.inSeconds.remainder(60).toString().padLeft(2, '0')}',
+                        style: TextStyle(
+                          color: Colors.white,
+                          // fontSize: fontsize
+                        ),
+                      )
+                    : Text(
+                        'Over Hours: ',
+                        style: TextStyle(
+                          color: Colors.white,
+                          // fontSize: fontsize
+                        ),
+                      ),
               ),
             ),
             SizedBox(
@@ -365,10 +362,9 @@ class _CounterScreenState extends State<CounterScreen> {
                           print('TimeYouShouldGoHome: $timeYouShouldGoHome');
                           // print(
                           //     'timeYouShouldGoHomeString: $timeYouShouldGoHomeString');
-                        }
-
-                        );
-                        save_shared_preferences('timeYouShouldGoHome', timeYouShouldGoHome);
+                        });
+                        save_shared_preferences(
+                            'timeYouShouldGoHome', timeYouShouldGoHome);
                         save_shared_preferences('startPracy', startPracy);
                         // Navigator.pushNamed(context, LoginScreen.id);
                         //Go to login screen.
@@ -396,9 +392,13 @@ class _CounterScreenState extends State<CounterScreen> {
                                 DateTime.fromMillisecondsSinceEpoch(
                                     startPracy));
 
-                            if(stopPracy > timeYouShouldGoHome){
-                              overHours = DateTime.fromMillisecondsSinceEpoch(stopPracy).difference(DateTime.fromMillisecondsSinceEpoch(timeYouShouldGoHome));
-                            }else{
+                            if (stopPracy > timeYouShouldGoHome) {
+                              overHours =
+                                  DateTime.fromMillisecondsSinceEpoch(stopPracy)
+                                      .difference(
+                                          DateTime.fromMillisecondsSinceEpoch(
+                                              timeYouShouldGoHome));
+                            } else {
                               overHours = null;
                             }
 
@@ -411,7 +411,6 @@ class _CounterScreenState extends State<CounterScreen> {
                             print('stopPracyMilisSinceEpoch: $stopPracy');
                           });
                           save_shared_preferences('stopPracy', stopPracy);
-
                         },
                         // minWidth: 200.0,
                         // height: 42.0,
@@ -439,7 +438,6 @@ class _CounterScreenState extends State<CounterScreen> {
                           setState(() {
                             upload();
                             // startPracyString = '';
-
                           });
                         },
                         // minWidth: 200.0,
@@ -464,55 +462,49 @@ class _CounterScreenState extends State<CounterScreen> {
       ),
     );
   }
-  get_sgared_preferencess()async{
+
+  get_sgared_preferencess() async {
     final prefs = await SharedPreferences.getInstance();
     startPracy = prefs.getInt('startPracy');
     stopPracy = prefs.getInt('stopPracy');
     timeYouShouldGoHome = prefs.getInt('timeYouShouldGoHome');
-
   }
-  upload()async{
+
+  upload() async {
     //test
     final _auth = await FirebaseAuth.instance;
-    final user =  await _auth.currentUser;
+    final user = await _auth.currentUser;
     final uid = await user.uid.toString();
-    print('poprawna rejestracja');
-    try{
-    await globals.firestore
-        .collection('WorkTime')
-        .doc('$uid')
-        .collection('SavedHours').doc('${globals
-        .timeFormatyyyy_MM_dd_HH_mm_ss
-        .format(DateTime.now())
-        .toString()}')
-        .set(
-        {
-          'detail_note': '',
-          'employer': '',
-          'main_note': '',
-          'order': '',
-          'over_hours': overHours != null ?
-        '${overHours.inHours.remainder(60).toString().padLeft(2,'0')}:${overHours.inMinutes.remainder(60).toString().padLeft(2,'0')}:${overHours.inSeconds.remainder(60).toString().padLeft(2,'0')}':
-        null,
-          'time_you_want_work_hour': '$timeYouWantWorkHour',
-          'time_you_want_work_min': '$timeYouWantWorkMin',
-          'start_pracy': startPracy,
-          'stop_pracy': stopPracy,
-        });
-    setState(() {
-
-      overHours = null;
-      startPracy = null;
-      save_shared_preferences('startPracy', startPracy);
-      stopPracy = null;
-      save_shared_preferences('stopPracy', stopPracy);
-      timeYouShouldGoHome = null;
-      save_shared_preferences('timeYouShouldGoHome', timeYouShouldGoHome);
-      totalTimeSpendAtWork = null;
-
-    });
-    //test
-    }catch(e){
+    try {
+      await globals.firestore
+          .collection('WorkTime')
+          .doc('$uid')
+          .collection('SavedHours')
+          .doc(
+              '${globals.timeFormatyyyy_MM_dd_HH_mm_ss.format(DateTime.now()).toString()}')
+          .set({
+        'detail_note': '',
+        'employer': '',
+        'main_note': '',
+        'order': '',
+        'over_hours': overHours != null ? overHours : 0,
+        'time_you_want_work_hour': timeYouWantWorkHour,
+        'time_you_want_work_min': timeYouWantWorkMin,
+        'start_pracy': startPracy,
+        'stop_pracy': stopPracy,
+      });
+      setState(() {
+        overHours = null;
+        startPracy = null;
+        save_shared_preferences('startPracy', startPracy);
+        stopPracy = null;
+        save_shared_preferences('stopPracy', stopPracy);
+        timeYouShouldGoHome = null;
+        save_shared_preferences('timeYouShouldGoHome', timeYouShouldGoHome);
+        totalTimeSpendAtWork = null;
+      });
+      //test
+    } catch (e) {
       showUserMessageByToast(
           displayedText: e,
           toastTimeDisplay: Toast.LENGTH_SHORT,
@@ -555,7 +547,8 @@ class _CounterScreenState extends State<CounterScreen> {
   //   print('Timer Started');
   // }
 }
-save_shared_preferences(String key, value)async {
+
+save_shared_preferences(String key, value) async {
   final prefs = await SharedPreferences.getInstance();
   await prefs.setInt(key, value);
 }

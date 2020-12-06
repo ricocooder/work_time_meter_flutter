@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ricocoder.work_time_meter_flutter">
+    <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="work_time_meter_flutter"
+        android:label="WorkTimeMeter"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
